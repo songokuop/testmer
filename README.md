@@ -2,18 +2,17 @@
 ### PR's Welcomed
 <br>
 
-![GitHub Repo stars](https://img.shields.io/github/stars/yashoswalyo/MERGE-BOT?color=blue&style=flat)
-![GitHub forks](https://img.shields.io/github/forks/yashoswalyo/MERGE-BOT?color=green&style=flat)
-![GitHub issues](https://img.shields.io/github/issues/yashoswalyo/MERGE-BOT)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/yashoswalyo/MERGE-BOT)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/yashoswalyo/MERGE-BOT)
-![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/yashoswalyo/MERGE-BOT)
-![GitHub contributors](https://img.shields.io/github/contributors/yashoswalyo/MERGE-BOT?style=flat)
-![GitHub repo size](https://img.shields.io/github/repo-size/yashoswalyo/MERGE-BOT?color=red)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/yashoswalyo/MERGE-BOT)
+![GitHub Repo stars](https://img.shields.io/github/stars/BLVCK-ANGEL/Merge-Bot?color=blue&style=flat)
+![GitHub forks](https://img.shields.io/github/forks/BLVCK-ANGEL/Merge-Bot?color=green&style=flat)
+![GitHub issues](https://img.shields.io/github/issues/BLVCK-ANGEL/Merge-Bot)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/BLVCK-ANGEL/Merge-Bot)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/BLVCK-ANGEL/Merge-Bot)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/BLVCK-ANGEL/Merge-Bot)
+![GitHub contributors](https://img.shields.io/github/contributors/BLVCK-ANGEL/Merge-Bot?style=flat)
+![GitHub repo size](https://img.shields.io/github/repo-size/BLVCK-ANGEL/Merge-Bot?color=red)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/BLVCK-ANGEL/Merge-Bot)
 
-An Telegram Bot By [Yash Oswal](https://t.me/yashoswalyo) To Merge multiple Videos in Telegram into single video. <br>
-Bugs should be reported at: [Telegram Group](https://t.me/yo_codes_support)
+
 
 ```diff
 - TODO's:
@@ -39,7 +38,7 @@ Bugs should be reported at: [Telegram Group](https://t.me/yo_codes_support)
 [![Watch the video](https://img.youtube.com/vi/H-xVk_4zccs/hqdefault.jpg)](https://youtu.be/H-xVk_4zccs)
 
 ## Deploy(at your own risk) :
-<p><a href="https://heroku.com/deploy?template=https://github.com//BLVCK-ANGEL/testmerge"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blueviolet?style=for-the-badge&logo=heroku" width="200""/></a></p>
+<p><a href="https://heroku.com/deploy?template=https://github.com/BLVCK-ANGEL/Merge-Bot"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blueviolet?style=for-the-badge&logo=heroku" width="200""/></a></p>
 
 ### OR
 Goto `settings > actions > secret > New Repository Secret` <br>
@@ -86,7 +85,7 @@ stats - (admin only) check bots stats
 
 ## Self Host
 ```sh
-$ git clone https://github.com/yashoswalyo/MERGE-BOT.git
+$ git clone https://github.com/BLVCK-ANGEL/Merge-Bot.git
 $ cd MERGE-BOT
 $ sudo apt-get install python3 python3-pip ffmpeg
 $ pip3 install -U pip
@@ -98,7 +97,7 @@ $ bash start.sh
 ## License
 ```
 Merge Bot, Telegram Video Merge Bot
-Copyright (c) 2021  Yash Oswal <https://github.com/yashoswalyo>
+Copyright (c) 2021  Blvck Angel <https://github.com/BLVCK-ANGEL>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
