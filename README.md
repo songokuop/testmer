@@ -2,15 +2,6 @@
 ### PR's Welcomed
 <br>
 
-![GitHub Repo stars](https://img.shields.io/github/stars/BLVCK-ANGEL/Merge-Bot?color=blue&style=flat)
-![GitHub forks](https://img.shields.io/github/forks/BLVCK-ANGEL/Merge-Bot?color=green&style=flat)
-![GitHub issues](https://img.shields.io/github/issues/BLVCK-ANGEL/Merge-Bot)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/BLVCK-ANGEL/Merge-Bot)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/BLVCK-ANGEL/Merge-Bot)
-![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/BLVCK-ANGEL/Merge-Bot)
-![GitHub contributors](https://img.shields.io/github/contributors/BLVCK-ANGEL/Merge-Bot?style=flat)
-![GitHub repo size](https://img.shields.io/github/repo-size/BLVCK-ANGEL/Merge-Bot?color=red)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/BLVCK-ANGEL/Merge-Bot)
 
 
 
