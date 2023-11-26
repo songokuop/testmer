@@ -115,19 +115,18 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
     vid_list = _cache
     LOGGER.info(f"Tʀʏɪɴɢ ᴛᴏ ᴍᴇʀɢᴇ ᴠɪᴅᴇᴏs ᴜsᴇʀ {cb.from_user.id}")
     await cb.message.edit(
-     text=f"🔀 Tʀʏɪɴɢ ᴛᴏ ᴍᴇʀɢᴇ ᴠɪᴅᴇᴏs ...",
+     text=f"🔀 Tʀʏɪɴɢ ᴛᴏ ᴍᴇʀɢᴇ ᴠɪᴅᴇᴏs \n Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄᴀɴᴄᴇʟ ᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ (𝟷𝟶sᴇᴄ ʀᴇᴍᴀɪɴ) ...",
             reply_markup=InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    "❌ Cancel",
-                                    callback_data="cancel",
+                                    "❌ Cancel",callback_data="cancel",
                                 ),
                             ]
                         ]
             )
         )
-    await asyncio.sleep(5)
+    await asyncio.sleep(10)
     with open(input_, "w") as _list:
         _list.write("\n".join(vid_list))
     merged_video_path = await MergeVideo(
