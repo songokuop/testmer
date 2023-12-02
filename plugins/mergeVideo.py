@@ -120,7 +120,7 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
                         [
                             [
                                 InlineKeyboardButton("❌ Cancel",callback_data="cancel",),
-                              InlineKeyboardButton(" Continue",callback_data="merge",)
+                              InlineKeyboardButton(" Continue",callback_data="continue",)
                             ]
                         ]
             )
