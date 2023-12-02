@@ -179,38 +179,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         await cb.message.edit("Sucessfully Cancelled")
         await asyncio.sleep(5)
         await cb.message.delete(True)
-        return
-    
-#added new btn feature
-    elif cb.data == "continue":
-        input_ = f"downloads/{str(cb.from_user.id)}/input.txt"
-        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-        formatDB.update({cb.from_user.id: None})
-        await cb.message.edit("Resuming Process in  5 sec")
-        await asyncio.sleep(5)
-        merged_video_path = await MergeVideo(
-         input_file=input_,user_id=cb.from_user.id, message=cb.message, format_="mkv"
-    )
-        if merged_video_path is None:
-            await cb.message.edit("❌ Failed to merge video !")
-        await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-        formatDB.update({cb.from_user.id: None})
-        
-        try:
-            await cb.message.edit("✅ Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ !")
-        except MessageNotModified:
-            await cb.message.edit("Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ! ✅")
-            LOGGER.info(f"Video merged for: {cb.from_user.first_name} ")
-            await asyncio.sleep(3)
-            file_size = os.path.getsize(merged_video_path)
-            os.rename(merged_video_path, new_file_name)
-            await cb.message.edit(
-        f"🔄 Rᴇɴᴀᴍᴇᴅ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ᴛᴏ\n **{new_file_name.rsplit('/',1)[-1]}**"
-    )
-            await asyncio.sleep(3)
-            merged_video_path = new_file_name
-        
+        return      
         
         
     elif cb.data.startswith("gUPcancel"):
