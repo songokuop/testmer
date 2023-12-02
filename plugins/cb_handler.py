@@ -189,7 +189,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         await cb.message.edit("Resuming Process in  5 sec")
         await asyncio.sleep(5)
         merged_video_path = await MergeVideo(
-         user_id=cb.from_user.id, message=cb.message, format_="mkv"
+         input_file=input_,user_id=cb.from_user.id, message=cb.message, format_="mkv"
     )
         if merged_video_path is None:
             await cb.message.edit("❌ Failed to merge video !")
