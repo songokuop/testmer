@@ -12,7 +12,7 @@ from config import Config
 from __init__ import LOGGER
 from helpers.utils import get_path_size
 
-updater = Updater(Config.BOT_TOKEN, use_context=True) 
+updater = Updater(Config.BOT_TOKEN) 
 dp=updater.dispatcher
 async def MergeVideo(input_file: str, user_id: int, message: Message, format_: str):
     """
