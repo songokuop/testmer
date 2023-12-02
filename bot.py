@@ -196,7 +196,7 @@ async def start_handler(c: Client, m: Message):
     if m.from_user.id != int(Config.OWNER):
         if user.allowed is False:
             res = await m.reply_text(
-                text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Uɴғᴏʀᴛᴜɴᴀᴛᴇʟʏ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴍᴇ\n\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}** ",
+                text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ᴍᴇ ᴛʜᴇɴ ʟᴏɢɪɴ\n/login <password>\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}** ",
                 quote=True,
             )
             return
