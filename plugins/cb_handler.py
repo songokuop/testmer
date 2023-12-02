@@ -179,7 +179,15 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         await asyncio.sleep(5)
         await cb.message.delete(True)
         return
-
+#added new btn feature
+    elif cb.data == "continue":
+        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
+        formatDB.update({cb.from_user.id: None})
+        await cb.message.edit("Resuming Process in  5 sec")
+        await asyncio.sleep(5)
+        await cb.message.delete(True)
+        return
+        
     elif cb.data.startswith("gUPcancel"):
         cmf = cb.data.split("/")
         chat_id, mes_id, from_usr = cmf[1], cmf[2], cmf[3]
