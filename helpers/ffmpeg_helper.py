@@ -37,6 +37,7 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
     ]
     process = None
     pause_flag = False
+    dp=updater.dispatcher
     async def pause_process(update: Update, context: CallbackContext):
         nonlocal pause_flag
         pause_flag = True
