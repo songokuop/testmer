@@ -119,14 +119,13 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
             reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton(
-                                    "❌ Cancel",callback_data="cancel",
-                                ),
+                                InlineKeyboardButton("❌ Cancel",callback_data="cancel",),
+                              InlineKeyboardButton(" Continue",callback_data="MergeVideo",)
                             ]
                         ]
             )
         )
-    await asyncio.sleep(10)
+    await asyncio.sleep(600)
     with open(input_, "w") as _list:
         _list.write("\n".join(vid_list))
     merged_video_path = await MergeVideo(
