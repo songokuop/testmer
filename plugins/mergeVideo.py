@@ -119,8 +119,8 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
             reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton("❌ Cancel",callback_data="cancel",),
-                              InlineKeyboardButton(" Continue",callback_data="continue",)
+                                InlineKeyboardButton("❌ Cancel",callback_data="cancel",)
+                              #InlineKeyboardButton(" Continue",callback_data="continue",)
                             ]
                         ]
             )
