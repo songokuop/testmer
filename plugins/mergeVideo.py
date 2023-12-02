@@ -125,7 +125,7 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
                         ]
             )
         )
-    await asyncio.sleep(600)
+    await asyncio.sleep(10)
 
     with open(input_, "w") as _list:
         _list.write("\n".join(vid_list))
