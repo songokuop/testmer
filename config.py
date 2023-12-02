@@ -14,3 +14,5 @@ class Config(object):
     USER_SESSION_STRING = os.environ.get("USER_SESSION_STRING", None)
     IS_PREMIUM = True
     MODES = ["video-video", "video-audio", "video-subtitle","extract-streams"]
+    UPSTREAM_REPO = "https://github.com/BLVCK-ANGEL/Merge-Bot"
+    UPSTREAM_BRANCH = "main"
