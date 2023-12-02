@@ -4,7 +4,7 @@ import shutil
 import os
 import time
 import ffmpeg
-from telegram import Update, Message, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Updater, Message, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, CallbackQueryHandler, CallbackContext
 from pyrogram import Client, filters
 from pyrogram.types import CallbackQuery
@@ -12,6 +12,7 @@ from config import Config
 from __init__ import LOGGER
 from helpers.utils import get_path_size
 
+updater = Updater(Config.BOT_TOKEN, use_context=True) 
 dp=updater.dispatcher
 async def MergeVideo(input_file: str, user_id: int, message: Message, format_: str):
     """
