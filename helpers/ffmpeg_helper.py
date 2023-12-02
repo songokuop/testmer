@@ -4,6 +4,8 @@ import shutil
 import os
 import time
 import ffmpeg
+from telegram import Update, Message, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import CommandHandler, CallbackQueryHandler, CallbackContext
 from pyrogram import Client, filters
 from pyrogram.types import CallbackQuery,InlineKeyboardButton,InlineKeyboardMarkup,CallbackContext,CommandHandler
 from config import Config
