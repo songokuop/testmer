@@ -38,15 +38,15 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
     process = None
     pause_flag = False
     
-    async def pause_process(update: Update, context: CallbackContext):
+    async def pause_process(c: Client, cb: CallbackQuery):
         nonlocal pause_flag
         pause_flag = True
-        await update.message.edit_text("Merge process paused. Click 'Resume' to continue.")
+        await cb.message.edit_text("Merge process paused. Click 'Resume' to continue.")
 
-    async def resume_merge(update: Update, context: CallbackContext):
+    async def resume_merge(c: Client, cb: CallbackQuery):
         nonlocal pause_flag
         pause_flag = False
-        await update.message.edit_text("Resuming merge process.")
+        await cb.message.edit_text("Resuming merge process.")
 
     # Register the command handlers for pause and resume
     dp.add_handler(CommandHandler("pause", pause_process))
