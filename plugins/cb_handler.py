@@ -179,7 +179,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         await asyncio.sleep(5)
         await cb.message.delete(True)
         return
-    )
+    
 #added new btn feature
     elif cb.data == "continue":
         queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
