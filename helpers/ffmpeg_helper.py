@@ -5,15 +5,13 @@ import os
 import time
 import ffmpeg
 from telegram import Message, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CommandHandler, CallbackQueryHandler, CallbackContext,Updater
 from pyrogram import Client, filters
 from pyrogram.types import CallbackQuery
 from config import Config
 from __init__ import LOGGER
 from helpers.utils import get_path_size
 
-updater = Updater(Config.BOT_TOKEN) 
-dp=updater.dispatcher
+
 async def MergeVideo(input_file: str, user_id: int, message: Message, format_: str):
     """
     This is for Merging Videos Together!
@@ -38,25 +36,7 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
         "copy",
         output_vid,
     ]
-    process = None
-    pause_flag = False
-    
-    async def pause_process(c: Client, cb: CallbackQuery):
-        nonlocal pause_flag
-        pause_flag = True
-        await cb.message.edit_text("Merge process paused. Click 'Resume' to continue.")
-
-    async def resume_merge(c: Client, cb: CallbackQuery):
-        nonlocal pause_flag
-        pause_flag = False
-        await cb.message.edit_text("Resuming merge process.")
-
-    # Register the command handlers for pause and resume
-    dp.add_handler(CommandHandler("pause", pause_process))
-    dp.add_handler(CommandHandler("resume", resume_merge))
-    dp.add_handler(CallbackQueryHandler(pause_process, pattern='^pause$'))
-    dp.add_handler(CallbackQueryHandler(resume_merge, pattern='^resume$'))
-
+    process = None     
     try:
         process = await asyncio.create_subprocess_exec(
             *file_generator_command,
@@ -69,22 +49,12 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
         )
         await asyncio.sleep(10)
         return None
-    await message.edit("Merging Video Now ...\n\nPlease Keep Patience ...",
-    reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("Pause", callback_data="pause")],
-            [InlineKeyboardButton("Resume", callback_data="resume")],
-        ])
-    )
-    while process.returncode is None:
-        process.poll()
-        await asyncio.sleep(1)  # Adjust sleep time as needed
-
-    await message.edit("Merge process completed.")
-    #stdout, stderr = await process.communicate()
-    #e_response = stderr.decode().strip()
-    #t_response = stdout.decode().strip()
-    #LOGGER.info(e_response)
-    #LOGGER.info(t_response)
+    await message.edit("Merging Video Now ...\n\nPlease Keep Patience ...")
+    stdout, stderr = await process.communicate()
+    e_response = stderr.decode().strip()
+    t_response = stdout.decode().strip()
+    LOGGER.info(e_response)
+    LOGGER.info(t_response)
     if os.path.lexists(output_vid):
         return output_vid
     else:
