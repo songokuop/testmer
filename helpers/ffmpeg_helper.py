@@ -4,13 +4,13 @@ import shutil
 import os
 import time
 import ffmpeg
-from pyrogram.types import CallbackQuery,InlineKeyboardButton,InlineKeyboardMarkup
+from pyrogram.types import CallbackQuery,InlineKeyboardButton,InlineKeyboardMarkup,CallbackContext.CommandHandler
 from config import Config
 from pyrogram.types import Message
 from __init__ import LOGGER
 from helpers.utils import get_path_size
 
-
+dp=updater.dispatcher
 async def MergeVideo(input_file: str, user_id: int, message: Message, format_: str):
     """
     This is for Merging Videos Together!
@@ -37,7 +37,7 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
     ]
     process = None
     pause_flag = False
-    dp=updater.dispatcher
+    
     async def pause_process(update: Update, context: CallbackContext):
         nonlocal pause_flag
         pause_flag = True
