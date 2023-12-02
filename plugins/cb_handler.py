@@ -183,6 +183,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
     
 #added new btn feature
     elif cb.data == "continue":
+        input_ = f"downloads/{str(cb.from_user.id)}/input.txt"
         queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
         formatDB.update({cb.from_user.id: None})
         await cb.message.edit("Resuming Process in  5 sec")
