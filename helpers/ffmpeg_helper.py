@@ -7,9 +7,8 @@ import ffmpeg
 from telegram import Update, Message, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, CallbackQueryHandler, CallbackContext
 from pyrogram import Client, filters
-from pyrogram.types import CallbackQuery,InlineKeyboardButton,InlineKeyboardMarkup,CallbackContext,CommandHandler
+from pyrogram.types import CallbackQuery
 from config import Config
-from pyrogram.types import Message,CallbackQueryHandler,updater
 from __init__ import LOGGER
 from helpers.utils import get_path_size
 
