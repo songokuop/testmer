@@ -1,5 +1,6 @@
 import asyncio
 import subprocess
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 import shutil
 import os
 import time
@@ -36,6 +37,21 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
         output_vid,
     ]
     process = None
+    pause_flag = False
+    async def pause_process(update: Update, context: CallbackContext):
+        nonlocal pause_flag
+        pause_flag = True
+        await update.message.edit_text("Merge process paused. Click 'Resume' to continue.")
+
+    async def resume_merge(update: Update, context: CallbackContext):
+        nonlocal pause_flag
+        pause_flag = False
+        await update.message.edit_text("Resuming merge process.")
+
+    # Register the command handlers for pause and resume
+    dp.add_handler(CommandHandler("pause", pause_process))
+    dp.add_handler(CommandHandler("resume", resume_merge))
+
     try:
         process = await asyncio.create_subprocess_exec(
             *file_generator_command,
@@ -49,16 +65,27 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
         await asyncio.sleep(10)
         return None
     await message.edit("Merging Video Now ...\n\nPlease Keep Patience ...")
-    stdout, stderr = await process.communicate()
-    e_response = stderr.decode().strip()
-    t_response = stdout.decode().strip()
-    LOGGER.info(e_response)
-    LOGGER.info(t_response)
+    reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("Pause", callback_data="pause")],
+            [InlineKeyboardButton("Resume", callback_data="resume")],
+        ])
+    )
+    while process.returncode is None:
+        process.poll()
+        await asyncio.sleep(1)  # Adjust sleep time as needed
+
+    await message.edit("Merge process completed.")
+    #stdout, stderr = await process.communicate()
+    #e_response = stderr.decode().strip()
+    #t_response = stdout.decode().strip()
+    #LOGGER.info(e_response)
+    #LOGGER.info(t_response)
     if os.path.lexists(output_vid):
         return output_vid
     else:
         return None
-
+dp.add_handler(CallbackQueryHandler(pause_process, pattern='^pause$'))
+dp.add_handler(CallbackQueryHandler(resume_merge, pattern='^resume$'))
 
 async def MergeSub(filePath: str, subPath: str, user_id):
     """
