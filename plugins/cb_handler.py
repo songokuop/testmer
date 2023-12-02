@@ -187,9 +187,11 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         formatDB.update({cb.from_user.id: None})
         await cb.message.edit("Resuming Process in  5 sec")
         await asyncio.sleep(5)
+        with open(input_, "w") as _list:
+         _list.write("\n".join(vid_list))
         merged_video_path = await MergeVideo(
         input_file=input_, user_id=cb.from_user.id, message=cb.message, format_="mkv"
-        )
+    )
         
         
     elif cb.data.startswith("gUPcancel"):
