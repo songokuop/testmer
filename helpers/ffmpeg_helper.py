@@ -63,7 +63,7 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
         )
         await asyncio.sleep(10)
         return None
-    await message.edit("Merging Video Now ...\n\nPlease Keep Patience ...")
+    await message.edit("Merging Video Now ...\n\nPlease Keep Patience ...",
     reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton("Pause", callback_data="pause")],
             [InlineKeyboardButton("Resume", callback_data="resume")],
