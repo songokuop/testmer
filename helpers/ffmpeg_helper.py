@@ -51,6 +51,8 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
     # Register the command handlers for pause and resume
     dp.add_handler(CommandHandler("pause", pause_process))
     dp.add_handler(CommandHandler("resume", resume_merge))
+    dp.add_handler(CallbackQueryHandler(pause_process, pattern='^pause$'))
+    dp.add_handler(CallbackQueryHandler(resume_merge, pattern='^resume$'))
 
     try:
         process = await asyncio.create_subprocess_exec(
@@ -84,8 +86,6 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
         return output_vid
     else:
         return None
-dp.add_handler(CallbackQueryHandler(pause_process, pattern='^pause$'))
-dp.add_handler(CallbackQueryHandler(resume_merge, pattern='^resume$'))
 
 async def MergeSub(filePath: str, subPath: str, user_id):
     """
