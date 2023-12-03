@@ -162,17 +162,8 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
         formatDB.update({cb.from_user.id: None})
         return
     
-    if cb.data == "continue":
-        await cb.message.edit(
-        text="🎥 Extracting video data...",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [InlineKeyboardButton("❌ Cancel", callback_data="cancel"),
-                 InlineKeyboardButton("✅ Continue", callback_data="continue")]
-            ]
-        )
-    )
     
+    await cb.message.edit("🎥 Extracting video data...")
     duration = 1
     try:
         metadata = extractMetadata(createParser(merged_video_path))
@@ -235,4 +226,6 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
     queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
     formatDB.update({cb.from_user.id: None})
     return
+
+
 
