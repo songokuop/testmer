@@ -125,7 +125,7 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
                         ]
             )
         )
-    await asyncio.sleep(20)
+    await asyncio.sleep(200)
     with open(input_, "w") as _list:
         _list.write("\n".join(vid_list))
     merged_video_path = await MergeVideo(
