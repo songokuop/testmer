@@ -35,8 +35,7 @@ is_continue_command = filters.create(lambda _, __, query: query.data == "continu
 @Client.on_callback_query(is_continue_command)
 async def continue_callback_handler(c: Client, cb: CallbackQuery):
     try:
-        await callback_query.answer()
-        cb = callback_query
+        await  CallbackQuery.answer()
         input_ = "your_input_path_here"  # Replace with your actual input path
         vid_list = []  # Replace with your actual list of video paths
     except MessageNotModified:
