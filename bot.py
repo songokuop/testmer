@@ -43,9 +43,8 @@ from __init__ import (
     replyDB,
 )
 from config import Config
-#from database.access_db import db
+from helpers import database
 from helpers.forcesub import ForceSub
-from database.add_user import AddUserToDatabase
 from helpers.utils import UserSettings, get_readable_file_size, get_readable_time
 
 botStartTime = time.time()
