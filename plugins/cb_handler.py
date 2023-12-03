@@ -1,5 +1,6 @@
 import asyncio
 import os
+from config import Config
 from pyrogram import filters
 from pyrogram.types import (
     CallbackQuery,
@@ -87,7 +88,52 @@ async def callback_handler(c: Client, cb: CallbackQuery):
 
 
    
-    
+    elif "refreshFsub" in cb.data:
+        if Config.UPDATES_CHANNEL:
+            try:
+                user = await bot.get_chat_member(chat_id=(int(Config.UPDATES_CHANNEL) if Config.UPDATES_CHANNEL.startswith("-100") else Config.UPDATES_CHANNEL), user_id=cb.message.chat.id)
+                if user.status == "kicked":
+                    await cb.message.edit(
+                        text="Sorry Sir, You are Banned to use me. Contact my Admin.",
+                        parse_mode="markdown",
+                        disable_web_page_preview=True
+                    )
+                    return
+            except UserNotParticipant:
+                try:
+                    invite_link = await bot.create_chat_invite_link(chat_id=(int(Config.UPDATES_CHANNEL) if Config.UPDATES_CHANNEL.startswith("-100") else Config.UPDATES_CHANNEL))
+                except FloodWait as e:
+                    await asyncio.sleep(e.x)
+                    invite_link = await bot.create_chat_invite_link(chat_id=(int(Config.UPDATES_CHANNEL) if Config.UPDATES_CHANNEL.startswith("-100") else Config.UPDATES_CHANNEL))
+                await cb.message.edit(
+                    text="**You Still Didn't Join ☹️, Please Join My Updates Channel to use this Bot!**\n\nDue to Overload, Only Channel Subscribers can use the Bot!",
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton("🤖 Join Updates Channel", url=invite_link.invite_link)
+                            ],
+                            [
+                                InlineKeyboardButton("🔄 Refresh 🔄", callback_data="refreshFsub")
+                            ]
+                        ]
+                    ),
+                    parse_mode="markdown"
+                )
+                return
+            except Exception:
+                await cb.message.edit(
+                    text="Something went Wrong. Contact my Admin.",
+                    parse_mode="markdown",
+                    disable_web_page_preview=True
+                )
+                return
+        await cb.message.edit(
+            text=Config.START_TEXT,
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Developer - @blvckangl", url="https://t.me/blvckangl"), InlineKeyboardButton("Updates Group", url="https://t.me/m_ovieupdates")]]),
+            disable_web_page_preview=True
+        )
+        
     elif cb.data == "to_telegram":
         UPLOAD_TO_DRIVE.update({f"{cb.from_user.id}": False})
         await cb.message.edit(
