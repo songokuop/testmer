@@ -45,7 +45,7 @@ from __init__ import (
 from config import Config
 from helpers.databases import database
 from helpers.forcesub import ForceSub
-from helpers.database.add_user import AddUserToDatabase
+from helpers.databases.add_user import AddUserToDatabase
 from helpers.utils import UserSettings, get_readable_file_size, get_readable_time
 
 botStartTime = time.time()
