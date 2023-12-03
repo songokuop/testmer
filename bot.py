@@ -43,6 +43,7 @@ from __init__ import (
     replyDB,
 )
 from config import Config
+from helpers.database.access_db import db
 from helpers.database import database
 from helpers.forcesub import ForceSub
 from helpers.database.add_user import AddUserToDatabase
