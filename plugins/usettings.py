@@ -4,13 +4,14 @@ from pyrogram.types import Message, InlineKeyboardMarkup
 from helpers.msg_utils import MakeButtons
 from helpers.utils import UserSettings
 from helpers.forcesub import ForceSub
+
 #from helpers.database.add_user import AddUserToDatabase
 
 
 @mergeApp.on_message(filters.command(["settings"]))
-async def f1(c: mergeApp, m: Message, bot: Client):
-    await AddUserToDatabase(bot, m)
-    Fsub = await ForceSub(bot, m)
+async def f1(c: mergeApp, m: Message):
+    await AddUserToDatabase(c, m)
+    Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
     # setUserMergeMode(uid=m.from_user.id,mode=1)
