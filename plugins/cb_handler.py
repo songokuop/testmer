@@ -30,10 +30,9 @@ from plugins.mergeVideoSub import mergeSub
 from plugins.streams_extractor import streamsExtractor
 from plugins.usettings import userSettings
 
-def is_continue_command(cb):
-    return cb.data == "continue"
+is_continue_command = filters.create(lambda _, __, query: query.data == "continue")
     
-@Client.on_callback_query(filters.create(is_continue_command))
+@Client.on_callback_query(is_continue_command)
 async def continue_callback_handler(c: Client, cb: CallbackQuery):
     try:
         await callback_query.answer()
