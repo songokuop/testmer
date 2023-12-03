@@ -114,18 +114,7 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
             _cache.append(vid_list[i])
     vid_list = _cache
     LOGGER.info(f"Tʀʏɪɴɢ ᴛᴏ ᴍᴇʀɢᴇ ᴠɪᴅᴇᴏs ᴜsᴇʀ {cb.from_user.id}")
-    await cb.message.edit(
-     text=f"🔀 Tʀʏɪɴɢ ᴛᴏ ᴍᴇʀɢᴇ ᴠɪᴅᴇᴏs \n Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴄᴀɴᴄᴇʟ ᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ (𝟷𝟶min ʀᴇᴍᴀɪɴ) ...",
-            reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton("❌ Cancel",callback_data="cancel"),
-                              InlineKeyboardButton("✅ Continue",callback_data="continue")
-                            ]
-                        ]
-            )
-        )
-    await asyncio.sleep(200)
+    await cb.message.edit("🔀 Tʀʏɪɴɢ ᴛᴏ ᴍᴇʀɢᴇ ᴠɪᴅᴇᴏs")
     with open(input_, "w") as _list:
         _list.write("\n".join(vid_list))
     merged_video_path = await MergeVideo(
@@ -172,7 +161,18 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
         queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
         formatDB.update({cb.from_user.id: None})
         return
-    await cb.message.edit("🎥 Exᴛʀᴀᴄᴛɪɴɢ ᴠɪᴅᴇᴏ ᴅᴀᴛᴀ ...")
+    
+    if cb.data == "continue":
+        await cb.message.edit(
+        text="🎥 Extracting video data...",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton("❌ Cancel", callback_data="cancel"),
+                 InlineKeyboardButton("✅ Continue", callback_data="continue")]
+            ]
+        )
+    )
+    
     duration = 1
     try:
         metadata = extractMetadata(createParser(merged_video_path))
@@ -184,12 +184,12 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
         formatDB.update({cb.from_user.id: None})
         await cb.message.edit("⭕ Mᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ɪs ᴄᴏʀʀᴜᴘᴛᴇᴅ")
         return
+    
     try:
         user = UserSettings(cb.from_user.id, cb.from_user.first_name)
         thumb_id = user.thumbnail
         if thumb_id is None:
             raise Exception
-        # thumb_id = await database.getThumb(cb.from_user.id)
         video_thumbnail = f"downloads/{str(cb.from_user.id)}_thumb.jpg"
         await c.download_media(message=str(thumb_id), file_name=video_thumbnail)
     except Exception as err:
@@ -197,6 +197,7 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
         video_thumbnail = await take_screen_shot(
             merged_video_path, f"downloads/{str(cb.from_user.id)}", (duration / 2)
         )
+    
     width = 1280
     height = 720
     try:
@@ -216,6 +217,7 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
         formatDB.update({cb.from_user.id: None})
         await cb.message.edit("⭕ Mᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ɪs ᴄᴏʀʀᴜᴘᴛᴇᴅ")
         return
+    
     await uploadVideo(
         c=c,
         cb=cb,
@@ -227,8 +229,10 @@ chat_id=cb.from_user.id, message_ids=list_message_ids ):
         file_size=os.path.getsize(merged_video_path),
         upload_mode=UPLOAD_AS_DOC[f"{cb.from_user.id}"],
     )
+    
     await cb.message.delete(True)
     await delete_all(root=f"downloads/{str(cb.from_user.id)}")
     queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
     formatDB.update({cb.from_user.id: None})
     return
+
