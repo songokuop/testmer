@@ -37,7 +37,9 @@ async def continue_callback_handler(c: Client, cb: CallbackQuery):
     try:
         input_ = f"downloads/{str(cb.from_user.id)}/input.txt"  # Replace with your actual input path
         vid_list =  list()  # Replace with your actual list of video paths
-    except MessageNotModified:
+        
+        merged_video_path = "default_value"
+        
         # Your existing code
         with open(input_, "w") as _list:
             _list.write("\n".join(vid_list))
@@ -52,6 +54,11 @@ async def continue_callback_handler(c: Client, cb: CallbackQuery):
             queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
             formatDB.update({cb.from_user.id: None})
             return
+            file_size = os.path.getsize(merged_video_path)
+    except Exception as e:
+        print(f"Error in continue_callback_handler: {e}")
+
+    
     try:
         await cb.message.edit("✅ Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ !")
     except MessageNotModified:
