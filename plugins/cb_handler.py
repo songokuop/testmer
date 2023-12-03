@@ -29,8 +29,8 @@ from plugins.mergeVideoSub import mergeSub
 from plugins.streams_extractor import streamsExtractor
 from plugins.usettings import userSettings
 
-@Client.on_callback_query(filters.CallbackQuery("continue"))
-async def continue_callback_handler(c:Client, cb:CallbackQuery):
+@Client.on_callback_query(filters.callback_query("continue"))
+async def continue_callback_handler(client, callback_query):
     try:
         await callback_query.answer()
         cb = callback_query
