@@ -7,7 +7,7 @@ from pyrogram.types import Message
 
 
 async def AddUserToDatabase(c: Client, cmd: Message):
-    if not await db.is_user_exist(cmd.from_user.id):
+    if not await db.isuser_exist(cmd.from_user.id):
         await db.addUser(cmd.from_user.id)
         if Config.LOG_CHANNEL is not None:
             await c.send_message(
