@@ -7,17 +7,9 @@ import datetime
 import motor.motor_asyncio
 
 
-#class Database(object):
-#    client = MongoClient(Config.DATABASE_URL)
-#    mergebot = client.MergeBot
-
 class Database(object):
-
-    def __init__(self, uri, database_name):
-        self._client = MongoClient(Config.DATABASE_URL)
-        self.db = self._client[database_name]
-        self.col = self.db.users
-        mergebot = self._client.MergeBot
+    client = MongoClient(Config.DATABASE_URL)
+    mergebot = client.MergeBot
 
 async def isuser_exist(uid):
     a = Database.mergebot.isuser_exist.find_one({"_id": uid})
