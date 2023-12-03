@@ -1,5 +1,17 @@
 import asyncio
 import os
+from pyrogram import filters
+from pyrogram.types import (
+    CallbackQuery,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+)
+from pyromod.types import ListenerTypes
+from pyromod.listen import Client
+
+from helpers import database
+from helpers.utils import UserSettings
 
 from bot import (
     LOGGER,
@@ -10,18 +22,7 @@ from bot import (
     gDict,
     queueDB,
     showQueue,
-    mergeApp
-)
-from helpers import database
-from helpers.utils import UserSettings
-from helpers.ffmpeg_helper import MergeSub, MergeVideo, take_screen_shot
-from pyrogram.errors import MessageNotModified
-from pyrogram import Client, filters
-from pyrogram.types import (
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Message,
+    
 )
 
 from plugins.mergeVideo import mergeNow
@@ -52,36 +53,6 @@ async def callback_handler(c: Client, cb: CallbackQuery):
             ),
         )
         return
-
-
-    if cb.data == "continue":
-        input_ = f"downloads/{str(cb.from_user.id)}/input.txt"
-        merged_video_path = await MergeVideo(
-        input_file=input_, user_id=cb.from_user.id, message=cb.message, format_="mkv"
-    )
-        await cb.message.edit(
-            text="It will be Continue",)
-        if merged_video_path is None:
-            await cb.message.edit("❌ Failed to merge video !")
-            await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-            queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-            formatDB.update({cb.from_user.id: None})
-            return
-        try:
-            await cb.message.edit("✅ Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ !")
-        except MessageNotModified:
-            await cb.message.edit("Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ! ✅")
-        LOGGER.info(f"Video merged for: {cb.from_user.first_name} ")
-        await asyncio.sleep(3)
-        file_size = os.path.getsize(merged_video_path)
-        os.rename(merged_video_path, new_file_name)
-        await cb.message.edit(
-             f"🔄 Rᴇɴᴀᴍᴇᴅ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ᴛᴏ\n **{new_file_name.rsplit('/',1)[-1]}**"
-         )
-        await asyncio.sleep(3)
-        merged_video_path = new_file_name
-        
-        return
         
     elif cb.data == "to_drive":
         try:
@@ -89,7 +60,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
             await c.download_media(
                 message=urc, file_name=f"userdata/{cb.from_user.id}/rclone.conf"
             )
-        except Exception as err:
+        except Exception :
             await cb.message.reply_text("Rclone not Found, Unable to upload to drive")
         if os.path.exists(f"userdata/{cb.from_user.id}/rclone.conf") is False:
             await cb.message.delete()
@@ -167,13 +138,13 @@ async def callback_handler(c: Client, cb: CallbackQuery):
 
     elif cb.data.startswith("rclone_"):
         if "save" in cb.data:
-            fileId = cb.message.reply_to_message.document.file_id
-            LOGGER.info(fileId)
+            message_id = cb.message.reply_to_message.document.file_id
+            LOGGER.info(message_id)
             await c.download_media(
                 message=cb.message.reply_to_message,
                 file_name=f"./userdata/{cb.from_user.id}/rclone.conf",
             )
-            await database.addUserRcloneConfig(cb, fileId)
+            await database.addUserRcloneConfig(cb, message_id)
         else:
             await cb.message.delete()
         return
@@ -184,7 +155,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
             await cb.message.edit(
                 "Cᴜʀʀᴇɴᴛ ғɪʟᴇɴᴀᴍᴇ: **[@blvckangl]_merged.mkv**\n\nSᴇɴᴅ ᴍᴇ ɴᴇᴡ ғɪʟᴇ ɴᴀᴍᴇ ᴡɪᴛʜᴏᴜᴛ ᴇxᴛᴇɴsɪᴏɴ: ʏᴏᴜ ʜᴀᴠᴇ 𝟷 ᴍɪɴᴜᴛᴇ"
             )
-            res: Message = await c.listen(cb.message.chat.id, timeout=300)
+            res: Message = await c.listen(chat_id=cb.message.chat.id, filters=filters.text, listener_type=ListenerTypes.MESSAGE, timeout=120, user_id=cb.from_user.id)
             if res.text:
                 new_file_name = f"downloads/{str(cb.from_user.id)}/{res.text}.mkv"
                 await res.delete(True)
@@ -245,13 +216,11 @@ async def callback_handler(c: Client, cb: CallbackQuery):
             pass
 
     elif cb.data.startswith("showFileName_"):
-        id = int(cb.data.rsplit("_", 1)[-1])
-        LOGGER.info(
-            queueDB.get(cb.from_user.id)["videos"],
-            queueDB.get(cb.from_user.id)["subtitles"],
-        )
-        sIndex = queueDB.get(cb.from_user.id)["videos"].index(id)
-        m = await c.get_messages(chat_id=cb.message.chat.id, message_ids=id)
+        message_id = int(cb.data.rsplit("_", 1)[-1])
+        LOGGER.info(queueDB.get(cb.from_user.id)["videos"])
+        LOGGER.info(queueDB.get(cb.from_user.id)["subtitles"])
+        sIndex = queueDB.get(cb.from_user.id)["videos"].index(message_id)
+        m = await c.get_messages(chat_id=cb.message.chat.id, message_ids=message_id)
         if queueDB.get(cb.from_user.id)["subtitles"][sIndex] is None:
             try:
                 await cb.message.edit(
@@ -272,7 +241,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                         ]
                     ),
                 )
-            except:
+            except Exception:
                 await cb.message.edit(
                     text=f"File Name: {m.document.file_name}",
                     reply_markup=InlineKeyboardMarkup(
@@ -314,7 +283,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                         ]
                     ),
                 )
-            except:
+            except Exception:
                 await cb.message.edit(
                     text=f"File Name: {m.document.file_name}\n\nSubtitles: {s.document.file_name}",
                     reply_markup=InlineKeyboardMarkup(
@@ -351,7 +320,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
             ),
         )
         subs: Message = await c.listen(
-            (cb.message.chat.id,None,None), filters="filters.document", timeout=60
+            chat_id=cb.message.chat.id, filters=filters.document, listener_type=ListenerTypes.MESSAGE, timeout=120, user_id=cb.from_user.id
         )
         if subs is not None:
             media = subs.document or subs.video
