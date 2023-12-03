@@ -11,13 +11,13 @@ import motor.motor_asyncio
 #    client = MongoClient(Config.DATABASE_URL)
 #    mergebot = client.MergeBot
 
-class Database:
+class Database(object):
 
     def __init__(self, uri, database_name):
         self._client = MongoClient(Config.DATABASE_URL)
         self.db = self._client[database_name]
         self.col = self.db.users
-        mergebot = client.MergeBot
+        mergebot = self._client.MergeBot
 
 async def is_user_exist(self, id):
         user = await self.col.find_one({'id': int(id)})
