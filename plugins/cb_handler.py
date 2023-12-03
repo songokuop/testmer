@@ -34,6 +34,7 @@ async def continue_callback_handler(client, callback_query):
     try:
         await callback_query.answer()
         cb = callback_query
+        c = client
         input_ = "your_input_path_here"  # Replace with your actual input path
         vid_list = []  # Replace with your actual list of video paths
     except MessageNotModified:
