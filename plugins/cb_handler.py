@@ -11,7 +11,7 @@ from pyrogram.types import (
 from pyromod.types import ListenerTypes
 from pyromod.listen import Client
 
-from helpers.databases import database
+from helpers.database import database
 from helpers.utils import UserSettings
 
 from bot import (
