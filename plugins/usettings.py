@@ -6,7 +6,11 @@ from helpers.utils import UserSettings
 
 
 @mergeApp.on_message(filters.command(["settings"]))
-async def f1(c: mergeApp, m: Message):
+async def f1(c: mergeApp, m: Message, bot: Client):
+    await AddUserToDatabase(bot, m)
+    Fsub = await ForceSub(bot, m)
+    if Fsub == 400:
+        return
     # setUserMergeMode(uid=m.from_user.id,mode=1)
     replay = await m.reply(text="Pʟᴇᴀsᴇ ᴡᴀɪᴛ", quote=True)
     usettings = UserSettings(m.from_user.id, m.from_user.first_name)
