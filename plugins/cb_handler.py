@@ -55,6 +55,10 @@ async def callback_handler(c: Client, cb: CallbackQuery):
 
 
     if cb.data == "continue":
+        input_ = f"downloads/{str(cb.from_user.id)}/input.txt"
+        merged_video_path = await MergeVideo(
+        input_file=input_, user_id=cb.from_user.id, message=cb.message, format_="mkv"
+    )
         await cb.message.edit(
             text="It will be Continue",)
         if merged_video_path is None:
