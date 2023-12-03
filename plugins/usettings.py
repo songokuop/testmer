@@ -3,6 +3,8 @@ from pyrogram import filters, Client as mergeApp
 from pyrogram.types import Message, InlineKeyboardMarkup
 from helpers.msg_utils import MakeButtons
 from helpers.utils import UserSettings
+from helpers.forcesub import ForceSub
+from helpers.database.add_user import AddUserToDatabase
 
 
 @mergeApp.on_message(filters.command(["settings"]))
