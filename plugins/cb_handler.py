@@ -15,6 +15,7 @@ from bot import (
 from helpers import database
 from helpers.utils import UserSettings
 from helpers.ffmpeg_helper import MergeSub, MergeVideo, take_screen_shot
+from pyrogram.errors import MessageNotModified
 from pyrogram import Client, filters
 from pyrogram.types import (
     CallbackQuery,
