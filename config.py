@@ -7,6 +7,7 @@ class Config(object):
     TELEGRAM_API = os.environ["TELEGRAM_API"]
     OWNER = os.environ.get("OWNER")
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME")
+    SESSION_NAME = os.environ.get("SESSION_NAME", "merge-bot")
     UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL")
     PASSWORD = os.environ.get("PASSWORD")
     DATABASE_URL = os.environ.get("DATABASE_URL")
