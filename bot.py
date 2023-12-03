@@ -639,41 +639,7 @@ async def delete_all(root):
         LOGGER.info(e)
 
 
-async def continue_callback(c: Client, cb: CallbackQuery):
-    # Get the callback query and message
-    query = update.callback_query
-    message = query.message
 
-    try:
-        # Continue with your merging logic
-        input_ = "your_input_file.txt"
-        vid_list = ["video1.mp4", "video2.mp4"]
-        with open(input_, "w") as _list:
-            _list.write("\n".join(vid_list))
-        merged_video_path = await MergeVideo(
-            input_file=input_, user_id=query.from_user.id, message=message, format_="mkv"
-        )
-
-        if merged_video_path is None:
-            await message.edit_text("❌ Failed to merge video !")
-            await delete_all(root=f"downloads/{str(query.from_user.id)}")
-            queueDB.update({query.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-            formatDB.update({query.from_user.id: None})
-            return
-
-        # Rename and edit the message
-        await message.edit_text("✅ Successfully merged video!")
-        await asyncio.sleep(3)
-        new_file_name = "new_video.mkv"
-        file_size = os.path.getsize(merged_video_path)
-        os.rename(merged_video_path, new_file_name)
-        await message.edit_text(f"🔄 Renamed merged video to\n **{new_file_name}**")
-        await asyncio.sleep(3)
-	merged_video_path = new_file_name
-
-    except Exception as e:
-        # Handle exceptions appropriately
-        await message.edit_text(f"❌ Error: {str(e)}")
 	    
 async def makeButtons(bot: Client, m: Message, db: dict):
     markup = []
