@@ -30,129 +30,7 @@ from plugins.mergeVideoSub import mergeSub
 from plugins.streams_extractor import streamsExtractor
 from plugins.usettings import userSettings
 
-is_continue_command = filters.create(lambda _, __, query: query.data == "continue")
-    
-@Client.on_callback_query(is_continue_command)
-async def continue_callback_handler(c: Client, cb: CallbackQuery):
-    try:
-        input_ = f"downloads/{str(cb.from_user.id)}/input.txt"  # Replace with your actual input path
-        vid_list =  list()  # Replace with your actual list of video paths
-        
-        merged_video_path = f"downloads/{str(user_id)}/[@yashoswalyo].{format_.lower()}"
-                # Your existing code
-        with open(input_, "w") as _list:
-         _list.write("\n".join(vid_list))
-        merged_video_path = await MergeVideo(
-            input_file=input_, user_id=cb.from_user.id, message=cb.message, format_="mkv"
-        )
 
-        # Rest of your code
-        if merged_video_path is None:
-            await cb.message.edit("❌ Failed to merge video !")
-            await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-            queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-            formatDB.update({cb.from_user.id: None})
-            return
-            file_size = os.path.getsize(merged_video_path)
-    except Exception as e:
-        print(f"Error in continue_callback_handler: {e}")
-
-    
-    try:
-        await cb.message.edit("✅ Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ !")
-    except MessageNotModified:
-        await cb.message.edit("Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ! ✅")
-    LOGGER.info(f"Video merged for: {cb.from_user.first_name} ")
-    await asyncio.sleep(3)
-    file_size = os.path.getsize(merged_video_path)
-    os.rename(merged_video_path, new_file_name)
-    await cb.message.edit(
-        f"🔄 Rᴇɴᴀᴍᴇᴅ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ᴛᴏ\n **{new_file_name.rsplit('/',1)[-1]}**"
-    )
-    await asyncio.sleep(3)
-    merged_video_path = new_file_name
-    if UPLOAD_TO_DRIVE[f"{cb.from_user.id}"]:
-        await rclone_driver(omess, cb, merged_video_path)
-        await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-        formatDB.update({cb.from_user.id: None})
-        return
-    if file_size > 2044723200 and Config.IS_PREMIUM == False:
-        await cb.message.edit(
-            f"Video is Larger than 2GB Can't Upload,\n\n Tell {Config.OWNER_USERNAME} to add premium account to get 4GB TG uploads"
-        )
-        await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-        formatDB.update({cb.from_user.id: None})
-        return
-    if Config.IS_PREMIUM and file_size > 4241280205:
-        await cb.message.edit(
-            f"Vɪᴅᴇᴏ ɪs ʟᴀʀɢᴇʀ ᴛʜᴀɴ 𝟺ɢʙ ᴄᴀɴ'ᴛ ᴜᴘʟᴏᴀᴅ,\n\n Tᴇʟʟ {Config.OWNER_USERNAME} ᴛᴏ ᴅɪᴇ ᴡɪᴛʜ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴏᴜɴᴛ"
-        )
-        await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-        formatDB.update({cb.from_user.id: None})
-        return
-    await cb.message.edit("🎥 Exᴛʀᴀᴄᴛɪɴɢ ᴠɪᴅᴇᴏ ᴅᴀᴛᴀ ...")
-    duration = 1
-    try:
-        metadata = extractMetadata(createParser(merged_video_path))
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
-    except Exception as er:
-        await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-        formatDB.update({cb.from_user.id: None})
-        await cb.message.edit("⭕ Mᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ɪs ᴄᴏʀʀᴜᴘᴛᴇᴅ")
-        return
-    try:
-        user = UserSettings(cb.from_user.id, cb.from_user.first_name)
-        thumb_id = user.thumbnail
-        if thumb_id is None:
-            raise Exception
-        # thumb_id = await database.getThumb(cb.from_user.id)
-        video_thumbnail = f"downloads/{str(cb.from_user.id)}_thumb.jpg"
-        await c.download_media(message=str(thumb_id), file_name=video_thumbnail)
-    except Exception as err:
-        LOGGER.info("Gᴇɴᴇʀᴀᴛɪɴɢ ᴛʜᴜᴍʙ")
-        video_thumbnail = await take_screen_shot(
-            merged_video_path, f"downloads/{str(cb.from_user.id)}", (duration / 2)
-        )
-    width = 1280
-    height = 720
-    try:
-        thumb = extractMetadata(createParser(video_thumbnail))
-        height = thumb.get("height")
-        width = thumb.get("width")
-        img = Image.open(video_thumbnail)
-        if width > height:
-            img.resize((320, height))
-        elif height > width:
-            img.resize((width, 320))
-        img.save(video_thumbnail)
-        Image.open(video_thumbnail).convert("RGB").save(video_thumbnail, "JPEG")
-    except:
-        await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-        queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-        formatDB.update({cb.from_user.id: None})
-        await cb.message.edit("⭕ Mᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ɪs ᴄᴏʀʀᴜᴘᴛᴇᴅ")
-        return
-    await uploadVideo(
-        c=c,
-        cb=cb,
-        merged_video_path=merged_video_path,
-        width=width,
-        height=height,
-        duration=duration,
-        video_thumbnail=video_thumbnail,
-        file_size=os.path.getsize(merged_video_path),
-        upload_mode=UPLOAD_AS_DOC[f"{cb.from_user.id}"],
-    )
-    await cb.message.delete(True)
-    await delete_all(root=f"downloads/{str(cb.from_user.id)}")
-    queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
-    formatDB.update({cb.from_user.id: None})
-    return
     
 @Client.on_callback_query()
 async def callback_handler(c: Client, cb: CallbackQuery):
@@ -175,6 +53,32 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         )
         return
 
+
+    if cb.data == "continue":
+        await cb.message.edit(
+            text="It will be Continue",)
+        if merged_video_path is None:
+            await cb.message.edit("❌ Failed to merge video !")
+            await delete_all(root=f"downloads/{str(cb.from_user.id)}")
+            queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
+            formatDB.update({cb.from_user.id: None})
+            return
+        try:
+            await cb.message.edit("✅ Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ !")
+        except MessageNotModified:
+            await cb.message.edit("Sᴜᴄᴇssғᴜʟʟʏ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ! ✅")
+        LOGGER.info(f"Video merged for: {cb.from_user.first_name} ")
+        await asyncio.sleep(3)
+        file_size = os.path.getsize(merged_video_path)
+        os.rename(merged_video_path, new_file_name)
+        await cb.message.edit(
+             f"🔄 Rᴇɴᴀᴍᴇᴅ ᴍᴇʀɢᴇᴅ ᴠɪᴅᴇᴏ ᴛᴏ\n **{new_file_name.rsplit('/',1)[-1]}**"
+         )
+        await asyncio.sleep(3)
+        merged_video_path = new_file_name
+        
+        return
+        
     elif cb.data == "to_drive":
         try:
             urc = await database.getUserRcloneConfig(cb.from_user.id)
