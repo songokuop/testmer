@@ -7,7 +7,7 @@ import datetime
 import motor.motor_asyncio
 
 
-class Database():
+class Database(object):
     client = MongoClient(Config.DATABASE_URL)
     mergebot = client.MergeBot
 
