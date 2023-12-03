@@ -4,7 +4,7 @@ import os.path
 import os
 import threading
 import time
-from helpers.databases.database import setUserMergeSettings, getUserMergeSettings
+from helpers.database.database import setUserMergeSettings, getUserMergeSettings
 # from magic import Magic
 SIZE_UNITS = ["B", "KB", "MB", "GB", "TB", "PB"]
 
