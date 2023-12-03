@@ -29,12 +29,11 @@ from plugins.mergeVideoSub import mergeSub
 from plugins.streams_extractor import streamsExtractor
 from plugins.usettings import userSettings
 
-@Client.on_callback_query(filters.callback_query("continue"))
-async def continue_callback_handler(client, callback_query):
+@Client.on_callback_query()
+async def continue_callback_handler(c: Client, cb: CallbackQuery):
     try:
         await callback_query.answer()
         cb = callback_query
-        c = client
         input_ = "your_input_path_here"  # Replace with your actual input path
         vid_list = []  # Replace with your actual list of video paths
     except MessageNotModified:
