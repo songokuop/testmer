@@ -39,10 +39,9 @@ async def continue_callback_handler(c: Client, cb: CallbackQuery):
         vid_list =  list()  # Replace with your actual list of video paths
         
         merged_video_path = "default_value"
-        
-        # Your existing code
-        with open(input_, "w") as _list:
-            _list.write("\n".join(vid_list))
+                # Your existing code
+        with open(downloads/668692506/input.txt, "w") as _list:
+            _list.write("\n".join(map(str, vid_list)))
         merged_video_path = await MergeVideo(
             input_file=input_, user_id=cb.from_user.id, message=cb.message, format_="mkv"
         )
