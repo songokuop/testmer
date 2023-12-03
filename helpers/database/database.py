@@ -19,9 +19,13 @@ class Database(object):
         self.col = self.db.users
         mergebot = self._client.MergeBot
 
-async def is_user_exist(self, id):
-        user = await self.col.find_one({'id': int(id)})
-        return True if user else False
+async def isuser_exist(uid):
+    a = Database.mergebot.isuser_exist.find_one({"_id": uid})
+    try:
+        if uid == a["_id"]:
+            return True
+    except TypeError:
+        return False
     
 async def addUser(uid, fname, lname):
     try:
