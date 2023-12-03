@@ -3,11 +3,20 @@ from pymongo.errors import DuplicateKeyError
 from pyrogram.types import CallbackQuery
 from config import Config
 from __init__ import LOGGER, MERGE_MODE
+import datetime
+import motor.motor_asyncio
 
 
-class Database(object):
-    client = MongoClient(Config.DATABASE_URL)
-    mergebot = client.MergeBot
+#class Database(object):
+#    client = MongoClient(Config.DATABASE_URL)
+#    mergebot = client.MergeBot
+
+class Database:
+
+    def __init__(self, uri, database_name):
+        self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
+        self.db = self._client[database_name]
+        self.col = self.db.users
 
 
 async def addUser(uid, fname, lname):
