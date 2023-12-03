@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
 from pyrogram.types import CallbackQuery
-from config import Config
+from config import *
 from __init__ import LOGGER, MERGE_MODE
 import datetime
 import motor.motor_asyncio
