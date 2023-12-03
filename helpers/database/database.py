@@ -18,7 +18,10 @@ class Database:
         self.db = self._client[database_name]
         self.col = self.db.users
 
-
+async def is_user_exist(self, id):
+        user = await self.col.find_one({'id': int(id)})
+        return True if user else False
+    
 async def addUser(uid, fname, lname):
     try:
         userDetails = {
