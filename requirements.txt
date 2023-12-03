@@ -3,6 +3,11 @@ ffmpeg-python
 hachoir
 Pillow
 psutil
+motor
+aiohttp
+dnspython
+aiofiles
+humanfriendly
 pymongo
 Pyrogram
 pyromod
