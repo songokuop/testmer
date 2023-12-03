@@ -35,9 +35,8 @@ is_continue_command = filters.create(lambda _, __, query: query.data == "continu
 @Client.on_callback_query(is_continue_command)
 async def continue_callback_handler(c: Client, cb: CallbackQuery):
     try:
-        await  CallbackQuery.answer()
-        input_ = "your_input_path_here"  # Replace with your actual input path
-        vid_list = []  # Replace with your actual list of video paths
+        input_ = f"downloads/{str(cb.from_user.id)}/input.txt"  # Replace with your actual input path
+        vid_list =  list()  # Replace with your actual list of video paths
     except MessageNotModified:
         # Your existing code
         with open(input_, "w") as _list:
