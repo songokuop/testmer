@@ -156,8 +156,8 @@ async def callback_handler(c: Client, cb: CallbackQuery):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("👆 Default", callback_data="rename_NO"),
-                        InlineKeyboardButton("✍️ Rename", callback_data="rename_YES"),
+                        InlineKeyboardButton("👆 Dᴇғᴀᴜʟᴛ", callback_data="rename_NO"),
+                        InlineKeyboardButton("✍️ Rᴇɴᴀᴍᴇ", callback_data="rename_YES"),
                     ],
                     [InlineKeyboardButton("⛔ Cᴀɴᴄᴇʟ ⛔", callback_data="cancel")],
                 ]
@@ -211,7 +211,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         await delete_all(root=f"downloads/{cb.from_user.id}/")
         queueDB.update({cb.from_user.id: {"videos": [], "subtitles": [], "audios": []}})
         formatDB.update({cb.from_user.id: None})
-        await cb.message.edit("Sucessfully Cancelled")
+        await cb.message.edit("Sᴜᴄᴇssғᴜʟʟʏ Cᴀɴᴄᴇʟʟᴇᴅ")
         await asyncio.sleep(5)
         await cb.message.delete(True)
         return      
