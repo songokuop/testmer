@@ -17,3 +17,9 @@ class Config(object):
     MODES = ["video-video", "video-audio", "video-subtitle","extract-streams"]
     UPSTREAM_REPO = "https://github.com/BLVCK-ANGEL/Merge-Bot"
     UPSTREAM_BRANCH = "main"
+
+    START_TEXT = """
+Hi Guys, I am Video Merge Bot!
+I can Merge Multiple Videos in One Video. Video Formats should be same.
+
+"""
