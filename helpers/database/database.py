@@ -176,4 +176,4 @@ def enableMetadataToggle(uid: int, value: bool):
 def disableMetadataToggle(uid: int, value: bool):
     1
 
-db = Database(Config.DATABASE_URL, Config.SESSION_NAME)
+
