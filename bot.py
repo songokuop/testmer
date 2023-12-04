@@ -667,14 +667,14 @@ async def delete_all(root):
 
 
 	    
-async def makeButtons(bot: Client, m: Message, db: dict):
+async def makeButtons(c: Client, m: Message, db: dict):
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
     markup = []
     user = UserSettings(m.chat.id, m.chat.first_name)
     if user.merge_mode == 1:
-        for i in await bot.get_messages(
+        for i in await c.get_messages(
             chat_id=m.chat.id, message_ids=db.get(m.chat.id)["videos"]
         ):
             media = i.video or i.document or None
@@ -696,7 +696,7 @@ async def makeButtons(bot: Client, m: Message, db: dict):
         )
         msgs.insert(
             0,
-            await bot.get_messages(
+            await c.get_messages(
                 chat_id=m.chat.id, message_ids=db.get(m.chat.id)["videos"][0]
             ),
         )
@@ -715,12 +715,12 @@ async def makeButtons(bot: Client, m: Message, db: dict):
                 )
 
     elif user.merge_mode == 3:
-        msgs: list[Message] = await bot.get_messages(
+        msgs: list[Message] = await c.get_messages(
             chat_id=m.chat.id, message_ids=db.get(m.chat.id)["subtitles"]
         )
         msgs.insert(
             0,
-            await bot.get_messages(
+            await c.get_messages(
                 chat_id=m.chat.id, message_ids=db.get(m.chat.id)["videos"][0]
             ),
         )
