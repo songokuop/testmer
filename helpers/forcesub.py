@@ -24,7 +24,7 @@ async def ForceSub(c: Client, m: Message):
                 chat_id=m.from_user.id,
                 text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/linux_repo).",
                 disable_web_page_preview=True,
-                parse_mode=None
+                parse_mode="Markdown",
                 
             )
             return 400
@@ -41,8 +41,8 @@ async def ForceSub(c: Client, m: Message):
                         InlineKeyboardButton("🔄 Refresh 🔄", callback_data="refreshFsub")
                     ]
                 ]
-            ),
-            parse_mode="None"
+            )
+            
         )
         return 400
     except Exception:
@@ -50,7 +50,7 @@ async def ForceSub(c: Client, m: Message):
             chat_id=m.from_user.id,
             text="Something went Wrong. Contact my [Support Group](https://t.me/linux_repo).",
             disable_web_page_preview=True,
-            parse_mode=None
+            parse_mode="Markdown",
         )
         return 400
     return 200
