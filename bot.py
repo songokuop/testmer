@@ -58,11 +58,11 @@ class MergeBot(Client):
             self.send_message(chat_id=int(Config.OWNER), text="<b>Bᴏᴛ sᴛᴀʀᴛᴇᴅ .!</b>")
         except Exception as err:
             LOGGER.error("Bᴏᴏᴛ ᴀʟᴇʀᴛ ғᴀɪʟᴇᴅ! Pʟᴇᴀsᴇ sᴛᴀʀᴛ ʙᴏᴛ ɪɴ PM")
-        return LOGGER.info("Bᴏᴛ sᴛᴀʀᴛᴇᴅ!")
+        return LOGGER.info("Bᴏᴛ Sᴛᴀʀᴛᴇᴅ!")
 
     def stop(self):
         super().stop()
-        return LOGGER.info("Bᴏᴛ sᴛᴏᴘᴘᴇᴅ")
+        return LOGGER.info("Bᴏᴛ Sᴛᴏᴘᴘᴇᴅ")
 
 
 mergeApp = MergeBot(
