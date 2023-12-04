@@ -88,9 +88,6 @@ async def sendLogFile(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["login"]) & filters.private)
 async def loginHandler(c: Client, m: Message):
- Fsub = await ForceSub(c, m)
-	if Fsub == 400:
-		return
     user = UserSettings(m.from_user.id, m.from_user.first_name)
     if user.banned:
         await m.reply_text(text=f"**Bᴀɴɴᴇᴅ ᴜsᴇʀ ᴅᴇᴛᴇᴄᴛᴇᴅ!**\n  🛡️ Uɴғᴏʀᴛᴜɴᴀᴛᴇʟʏ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴍᴇ\n\nCᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}", quote=True)
@@ -195,11 +192,10 @@ async def broadcast_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["start"]) & filters.private)
 async def start_handler(c: Client, m: Message):
-    
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
-    user = UserSettings(m.from_user.id, m.from_user.first_name)
+    #user = UserSettings(m.from_user.id, m.from_user.first_name)
 
     if m.from_user.id != int(Config.OWNER):
         if user.allowed is False:
@@ -222,12 +218,11 @@ async def start_handler(c: Client, m: Message):
     (filters.document | filters.video | filters.audio) & filters.private
 )
 async def files_handler(c: Client, m: Message):
-    
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
-    user_id = m.from_user.id
-    user = UserSettings(user_id, m.from_user.first_name)
+    #user_id = m.from_user.id
+    #user = UserSettings(user_id, m.from_user.first_name)
     if user_id != int(Config.OWNER):
         if user.allowed is False:
             res = await m.reply_text(
@@ -407,11 +402,10 @@ async def files_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.photo & filters.private)
 async def photo_handler(c: Client, m: Message):
-    
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
-    user = UserSettings(m.chat.id, m.from_user.first_name)
+    #user = UserSettings(m.chat.id, m.from_user.first_name)
     # if m.from_user.id != int(Config.OWNER):
     if not user.allowed:
         res = await m.reply_text(
@@ -433,6 +427,9 @@ async def photo_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["extract"]) & filters.private)
 async def media_extracter(c: Client, m: Message):
+    Fsub = await ForceSub(c, m)
+    if Fsub == 400:
+        return
     user = UserSettings(uid=m.from_user.id, name=m.from_user.first_name)
     if not user.allowed:
         return
@@ -658,6 +655,9 @@ async def delete_all(root):
 
 	    
 async def makeButtons(bot: Client, m: Message, db: dict):
+    Fsub = await ForceSub(c, m)
+    if Fsub == 400:
+        return
     markup = []
     user = UserSettings(m.chat.id, m.chat.first_name)
     if user.merge_mode == 1:
