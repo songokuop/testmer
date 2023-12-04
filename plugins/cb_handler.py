@@ -36,7 +36,7 @@ from plugins.usettings import userSettings
 
     
 @Client.on_callback_query()
-async def callback_handler(c: Client, cb: CallbackQuery, m:Message):
+async def callback_handler(c: Client, cb: CallbackQuery):
     #     await cb_handler.cb_handler(c, cb)
     # async def cb_handler(c: Client, cb: CallbackQuery):
     if cb.data == "merge":
@@ -127,23 +127,13 @@ async def callback_handler(c: Client, cb: CallbackQuery, m:Message):
                     disable_web_page_preview=True
                 )
                 return
-     #test           
-        if m.from_user.id != int(Config.OWNER):
-            if user.allowed is False:
-                res = await m.reply_text(
-                text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ᴍᴇ ᴛʜᴇɴ ʟᴏɢɪɴ\n/login <password>\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}** ",
-                quote=True,
-            )
-            return
-        else:
-            user.allowed = True
-            user.set()
-            res = await m.reply_text(
-                text=f"Hɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
-                quote=True,
-                )
-            del user
-   #test     
+            await cb.message.edit(
+            text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ᴍᴇ ᴛʜᴇɴ ʟᴏɢɪɴ\n/login <password>\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}**",
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ - @blvckangl", url="https://t.me/blvckangl"), InlineKeyboardButton("Uᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ", url="https://t.me/linux_repo")]]),
+            disable_web_page_preview=True
+        )
+            
+     
     elif cb.data == "to_telegram":
         UPLOAD_TO_DRIVE.update({f"{cb.from_user.id}": False})
         await cb.message.edit(
@@ -159,6 +149,7 @@ async def callback_handler(c: Client, cb: CallbackQuery, m:Message):
             ),
         )
         return
+    
 
     elif cb.data == "document":
         UPLOAD_AS_DOC.update({f"{cb.from_user.id}": True})
