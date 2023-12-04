@@ -9,6 +9,7 @@ from pyrogram.types import (
     Message,
 )
 from pyromod.types import ListenerTypes
+from pyrogram.errors import FloodWait, UserNotParticipant
 from pyromod.listen import Client
 
 from helpers import database
