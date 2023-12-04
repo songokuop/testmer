@@ -92,10 +92,10 @@ async def callback_handler(c: Client, cb: CallbackQuery):
         if Config.UPDATES_CHANNEL:
             try:
                 user = await bot.get_chat_member(chat_id=(int(Config.UPDATES_CHANNEL) if Config.UPDATES_CHANNEL.startswith("-100") else Config.UPDATES_CHANNEL), user_id=cb.message.chat.id)
-                if user.status == "kicked":
+                if user.status == "banned":
                     await cb.message.edit(
                         text="Sorry Sir, You are Banned to use me. Contact my Admin.",
-                        parse_mode="markdown",
+                        parse_mode="Markdown",
                         disable_web_page_preview=True
                     )
                     return
@@ -116,14 +116,14 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                                 InlineKeyboardButton("🔄 Refresh 🔄", callback_data="refreshFsub")
                             ]
                         ]
-                    ),
-                    parse_mode="markdown"
+                    )
+                    
                 )
                 return
             except Exception:
                 await cb.message.edit(
                     text="Something went Wrong. Contact my Admin.",
-                    parse_mode="markdown",
+                    parse_mode="Markdown",
                     disable_web_page_preview=True
                 )
                 return
