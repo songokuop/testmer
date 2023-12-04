@@ -2,7 +2,8 @@
 
 import asyncio
 from config import Config
-from pyrogram import Client
+import pyrogram
+from pyrogram import Client,filters, enums
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 
@@ -22,7 +23,7 @@ async def ForceSub(c: Client, m: Message):
             await c.send_message(
                 chat_id=m.from_user.id,
                 text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/linux_repo).",
-                parse_mode="markdown",
+                parse_mode=enums.ParseMode.MARKDOWN,
                 disable_web_page_preview=True
             )
             return 400
@@ -47,7 +48,7 @@ async def ForceSub(c: Client, m: Message):
         await c.send_message(
             chat_id=m.from_user.id,
             text="Something went Wrong. Contact my [Support Group](https://t.me/linux_repo).",
-            parse_mode="markdown",
+            parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
         return 400
