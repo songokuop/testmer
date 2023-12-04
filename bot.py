@@ -88,10 +88,9 @@ async def sendLogFile(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["login"]) & filters.private)
 async def loginHandler(c: Client, m: Message):
- 
-    Fsub = await ForceSub(c, m)
-    if Fsub == 400:
-        return
+ Fsub = await ForceSub(c, m)
+	if Fsub == 400:
+		return
     user = UserSettings(m.from_user.id, m.from_user.first_name)
     if user.banned:
         await m.reply_text(text=f"**Bᴀɴɴᴇᴅ ᴜsᴇʀ ᴅᴇᴛᴇᴄᴛᴇᴅ!**\n  🛡️ Uɴғᴏʀᴛᴜɴᴀᴛᴇʟʏ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴍᴇ\n\nCᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}", quote=True)
