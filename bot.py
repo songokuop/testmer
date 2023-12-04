@@ -43,10 +43,8 @@ from __init__ import (
     replyDB,
 )
 from config import Config
-from helpers.database.access_db import db
 from helpers.database import database
 from helpers.forcesub import ForceSub
-from helpers.database.add_user import AddUserToDatabase
 from helpers.utils import UserSettings, get_readable_file_size, get_readable_time
 
 botStartTime = time.time()
@@ -90,7 +88,7 @@ async def sendLogFile(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["login"]) & filters.private)
 async def loginHandler(c: Client, m: Message):
-    await AddUserToDatabase(c, m)
+ 
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
@@ -198,7 +196,7 @@ async def broadcast_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["start"]) & filters.private)
 async def start_handler(c: Client, m: Message):
-    await AddUserToDatabase(c, m)
+    
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
@@ -225,7 +223,7 @@ async def start_handler(c: Client, m: Message):
     (filters.document | filters.video | filters.audio) & filters.private
 )
 async def files_handler(c: Client, m: Message):
-    await AddUserToDatabase(c, m)
+    
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
@@ -410,7 +408,7 @@ async def files_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.photo & filters.private)
 async def photo_handler(c: Client, m: Message):
-    await AddUserToDatabase(c, m)
+    
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
