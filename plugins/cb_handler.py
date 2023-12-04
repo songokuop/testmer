@@ -128,7 +128,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                 )
                 return
             await cb.message.edit(
-            text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ᴍᴇ ᴛʜᴇɴ ʟᴏɢɪɴ\n/login <password>\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}**",
+            text=f"Hɪ 🛡️ Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ᴍᴇ ᴛʜᴇɴ ʟᴏɢɪɴ\n/login <password>\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}**",
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ - @blvckangl", url="https://t.me/blvckangl"), InlineKeyboardButton("Uᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ", url="https://t.me/linux_repo")]]),
             disable_web_page_preview=True
         )
