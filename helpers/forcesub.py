@@ -23,8 +23,9 @@ async def ForceSub(c: Client, m: Message):
             await c.send_message(
                 chat_id=m.from_user.id,
                 text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/linux_repo).",
-                parse_mode=enums.ParseMode.MARKDOWN,
-                disable_web_page_preview=True
+                disable_web_page_preview=True,
+                parse_mode=enums.ParseMode.HTML
+                
             )
             return 400
     except UserNotParticipant:
@@ -41,15 +42,15 @@ async def ForceSub(c: Client, m: Message):
                     ]
                 ]
             ),
-            parse_mode="markdown"
+            parse_mode="HTML"
         )
         return 400
     except Exception:
         await c.send_message(
             chat_id=m.from_user.id,
             text="Something went Wrong. Contact my [Support Group](https://t.me/linux_repo).",
-            parse_mode=enums.ParseMode.MARKDOWN,
-            disable_web_page_preview=True
+            disable_web_page_preview=True,
+            parse_mode=enums.ParseMode.HTML
         )
         return 400
     return 200
