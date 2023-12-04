@@ -225,8 +225,8 @@ async def files_handler(c: Client, m: Message):
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
-    #user_id = m.from_user.id
-    #user = UserSettings(user_id, m.from_user.first_name)
+    user_id = m.from_user.id
+    user = UserSettings(user_id, m.from_user.first_name)
     if user_id != int(Config.OWNER):
         if user.allowed is False:
             res = await m.reply_text(
