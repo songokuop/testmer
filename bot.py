@@ -88,6 +88,9 @@ async def sendLogFile(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["login"]) & filters.private)
 async def loginHandler(c: Client, m: Message):
+    Fsub = await ForceSub(c, m)
+    if Fsub == 400:
+        return
     user = UserSettings(m.from_user.id, m.from_user.first_name)
     if user.banned:
         await m.reply_text(text=f"**Bᴀɴɴᴇᴅ ᴜsᴇʀ ᴅᴇᴛᴇᴄᴛᴇᴅ!**\n  🛡️ Uɴғᴏʀᴛᴜɴᴀᴛᴇʟʏ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴍᴇ\n\nCᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}", quote=True)
@@ -465,6 +468,9 @@ async def media_extracter(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["help"]) & filters.private)
 async def help_msg(c: Client, m: Message):
+    Fsub = await ForceSub(c, m)
+    if Fsub == 400:
+        return
     await m.reply_text(
         text="""**Fᴏʟʟᴏᴡ ᴛʜᴇsᴇ sᴛᴇᴘs:
 
@@ -482,6 +488,9 @@ async def help_msg(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["about"]) & filters.private)
 async def about_handler(c: Client, m: Message):
+    Fsub = await ForceSub(c, m)
+    if Fsub == 400:
+        return
     await m.reply_text(
         text="""
 **Wʜᴀᴛ's ɴᴇᴡ:**
@@ -517,6 +526,9 @@ async def about_handler(c: Client, m: Message):
     filters.command(["savethumb", "setthumb", "savethumbnail"]) & filters.private
 )
 async def save_thumbnail(c: Client, m: Message):
+    Fsub = await ForceSub(c, m)
+    if Fsub == 400:
+        return
     if m.reply_to_message:
         if m.reply_to_message.photo:
             await photo_handler(c, m.reply_to_message)
