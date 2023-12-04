@@ -3,15 +3,11 @@ from pyrogram import filters, Client as mergeApp
 from pyrogram.types import Message, InlineKeyboardMarkup
 from helpers.msg_utils import MakeButtons
 from helpers.utils import UserSettings
-from helpers.database.access_db import db
-from helpers.database.add_user import AddUserToDatabase
 from helpers.forcesub import ForceSub
-
-
 
 @mergeApp.on_message(filters.command(["settings"]))
 async def f1(c: mergeApp, m: Message):
-    await AddUserToDatabase(c, m)
+    
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
