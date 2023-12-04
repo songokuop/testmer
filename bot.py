@@ -195,8 +195,8 @@ async def start_handler(c: Client, m: Message):
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
-    #user = UserSettings(m.from_user.id, m.from_user.first_name)
-
+    user = UserSettings(m.from_user.id, m.from_user.first_name)
+	
     if m.from_user.id != int(Config.OWNER):
         if user.allowed is False:
             res = await m.reply_text(
@@ -212,6 +212,7 @@ async def start_handler(c: Client, m: Message):
         quote=True,
     )
     del user
+
 
 
 @mergeApp.on_message(
