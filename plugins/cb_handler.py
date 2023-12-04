@@ -36,7 +36,7 @@ from plugins.usettings import userSettings
 
     
 @Client.on_callback_query()
-async def callback_handler(c: Client, cb: CallbackQuery):
+async def callback_handler(c: Client, cb: CallbackQuery, m:Message):
     #     await cb_handler.cb_handler(c, cb)
     # async def cb_handler(c: Client, cb: CallbackQuery):
     if cb.data == "merge":
@@ -95,7 +95,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                 user = await c.get_chat_member(chat_id=(int(Config.UPDATES_CHANNEL) if Config.UPDATES_CHANNEL.startswith("-100") else Config.UPDATES_CHANNEL), user_id=cb.message.chat.id)
                 if user.status =="banned":
                     await cb.message.edit(
-                        text="Sorry Sir, You are Banned to use me. Contact my Admin.",
+                        text="Sᴏʀʀʏ sɪʀ, ʏᴏᴜ ᴀʀᴇ ʙᴀɴɴᴇᴅ ᴛᴏ ᴜsᴇ ᴍᴇ. Cᴏɴᴛᴀᴄᴛ ᴍʏ ᴀᴅᴍɪɴ.",
                         parse_mode="Markdown",
                         disable_web_page_preview=True
                     )
@@ -107,14 +107,14 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                     await asyncio.sleep(e.x)
                     invite_link = await c.create_chat_invite_link(chat_id=(int(Config.UPDATES_CHANNEL) if Config.UPDATES_CHANNEL.startswith("-100") else Config.UPDATES_CHANNEL))
                 await cb.message.edit(
-                    text="**You Still Didn't Join ☹️, Please Join My Updates Channel to use this Bot!**\n\nDue to Overload, Only Channel Subscribers can use the Bot!",
+                    text="**Yᴏᴜ sᴛɪʟʟ ᴅɪᴅɴ'ᴛ ᴊᴏɪɴ ☹️, ᴘʟᴇᴀsᴇ ᴊᴏɪɴ ᴍʏ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴛʜɪs ʙᴏᴛ!**\n\nDᴜᴇ ᴛᴏ ᴏᴠᴇʀʟᴏᴀᴅ, ᴏɴʟʏ ᴄʜᴀɴɴᴇʟ sᴜʙsᴄʀɪʙᴇʀs ᴄᴀɴ ᴜsᴇ ᴛʜᴇ ʙᴏᴛ!",
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton("🤖 Join Updates Channel", url=invite_link.invite_link)
+                                InlineKeyboardButton("🤖 Jᴏɪɴ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ", url=invite_link.invite_link)
                             ],
                             [
-                                InlineKeyboardButton("🔄 Refresh 🔄", callback_data="refreshFsub")
+                                InlineKeyboardButton("🔄 Tʀʏ ᴀɢᴀɪɴ 🔄", callback_data="refreshFsub")
                             ]
                         ]
                     )
@@ -123,7 +123,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                 return
             except Exception:
                 await cb.message.edit(
-                    text="Something went Wrong. Contact my Admin.",
+                    text="Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ. ᴄᴏɴᴛᴀᴄᴛ ᴍʏ ᴀᴅᴍɪɴ.",
                     disable_web_page_preview=True
                 )
                 return
