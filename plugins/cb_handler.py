@@ -92,7 +92,6 @@ async def callback_handler(c: Client, cb: CallbackQuery):
 
    
     elif "refreshFsub" in cb.data:
-        user = UserSettings(m.from_user.id, m.from_user.first_name)
         if Config.UPDATES_CHANNEL:
             try:
                 user = await c.get_chat_member(chat_id=(int(Config.UPDATES_CHANNEL) if Config.UPDATES_CHANNEL.startswith("-100") else Config.UPDATES_CHANNEL), user_id=cb.message.chat.id)
@@ -131,7 +130,7 @@ async def callback_handler(c: Client, cb: CallbackQuery):
                 )
                 return
             await cb.message.edit(
-            text=f"fHɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}**",
+            text=f"fHɪ **⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}**",
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Dᴇᴠᴇʟᴏᴘᴇʀ", url="https://t.me/blvckangl"), InlineKeyboardButton("Fɪʟᴍ ʀᴇǫᴜᴇsᴛ", url="https://t.me/SRJ_TELEFLIX")]]),
             disable_web_page_preview=True
         )
