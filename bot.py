@@ -195,27 +195,19 @@ async def broadcast_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["start"]) & filters.private)
 async def start_handler(c: Client, m: Message):
-	btn = [[
-            InlineKeyboardButton("Close", callback_data="close")     
-        ]]
-    await message.reply_text(
-        text=f"Hɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(btn)
-    )
-   ''' Fsub = await ForceSub(c, m)
+    Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
     user = UserSettings(m.from_user.id, m.from_user.first_name)
 	
     if m.from_user.id != int(Config.OWNER):
-        if user.allowed is False:
+        if user.allowed is True:
             res = await m.reply_text(
-                text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Iғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ᴍᴇ ᴛʜᴇɴ ʟᴏɢɪɴ\n/login <password>\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}** ",
+                text=f"fHɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
                 quote=True,
             )
             return
-    else:
+    ''' else:
         user.allowed = True
         user.set()
     res = await m.reply_text(
