@@ -86,7 +86,7 @@ async def sendLogFile(c: Client, m: Message):
     return
 
 
-@mergeApp.on_message(filters.command(["login"]) & filters.private)
+'''@mergeApp.on_message(filters.command(["login"]) & filters.private)
 async def loginHandler(c: Client, m: Message):
     Fsub = await ForceSub(c, m)
     if Fsub == 400:
@@ -117,7 +117,7 @@ async def loginHandler(c: Client, m: Message):
             )
     user.set()
     del user
-    return
+    return'''
 
 
 @mergeApp.on_message(filters.command(["stats"]) & filters.private)
@@ -195,7 +195,15 @@ async def broadcast_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["start"]) & filters.private)
 async def start_handler(c: Client, m: Message):
-    Fsub = await ForceSub(c, m)
+	btn = [[
+            InlineKeyboardButton("Close", callback_data="close")     
+        ]]
+    await message.reply_text(
+        text=f"Hɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(btn)
+    )
+   ''' Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
     user = UserSettings(m.from_user.id, m.from_user.first_name)
@@ -214,7 +222,7 @@ async def start_handler(c: Client, m: Message):
         text=f"Hɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
         quote=True,
     )
-    del user
+    del user'''
 
 
 
