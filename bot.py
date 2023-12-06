@@ -155,6 +155,9 @@ async def stats_handler(c: Client, m: Message):
 )
 async def broadcast_handler(c: Client, m: Message):
     msg = m.reply_to_message
+    if msg is None:
+        await m.reply_text("Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ ʙʀᴏᴀᴅᴄᴀsᴛ.")
+        return
     userList = await database.broadcast()
     len = userList.collection.count_documents({})
     status = await m.reply_text(text=BROADCAST_MSG.format(str(len), "0"), quote=True)
