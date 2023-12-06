@@ -195,26 +195,16 @@ async def broadcast_handler(c: Client, m: Message):
 
 @mergeApp.on_message(filters.command(["start"]) & filters.private)
 async def start_handler(c: Client, m: Message):
-    Fsub = await ForceSub(c, m)
+   Fsub = await ForceSub(c, m)
     if Fsub == 400:
         return
-    user = UserSettings(m.from_user.id, m.from_user.first_name)
-	
-    if m.from_user.id != int(Config.OWNER):
-        if user.allowed is True:
-            res = await m.reply_text(
-                text=f"fHɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
-                quote=True,
-            )
-            return
-    ''' else:
-        user.allowed = True
-        user.set()
-    res = await m.reply_text(
-        text=f"Hɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
+    await m.reply_text(
+        text="""f"Hɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** """,
         quote=True,
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Cʟᴏsᴇ 🔐", callback_data="close")]]
+        ),
     )
-    del user'''
 
 
 
@@ -227,13 +217,6 @@ async def files_handler(c: Client, m: Message):
         return
     user_id = m.from_user.id
     user = UserSettings(user_id, m.from_user.first_name)
-    if user_id != int(Config.OWNER):
-        if user.allowed is False:
-            res = await m.reply_text(
-                text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Uɴғᴏʀᴛᴜɴᴀᴛᴇʟʏ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴍᴇ\n\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}** ",
-                quote=True,
-            )
-            return
     if user.merge_mode == 4: # extract_mode
         return
     input_ = f"downloads/{str(user_id)}/input.txt"
@@ -411,13 +394,6 @@ async def photo_handler(c: Client, m: Message):
         return
     user = UserSettings(m.chat.id, m.from_user.first_name)
     #if m.from_user.id != int(Config.OWNER):
-    if not user.allowed:
-        res = await m.reply_text(
-                text=f"Hɪ **{m.from_user.first_name}**\n\n 🛡️ Uɴғᴏʀᴛᴜɴᴀᴛᴇʟʏ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴍᴇ\n\n**Cᴏɴᴛᴀᴄᴛ: 🈲 @{Config.OWNER_USERNAME}** ",
-                quote=True,
-        )
-        del user
-        return
     thumbnail = m.photo.file_id
     msg = await m.reply_text("Sᴀᴠɪɴɢ ᴛʜᴜᴍʙɴᴀɪʟ. . . .", quote=True)
     user.thumbnail = thumbnail
