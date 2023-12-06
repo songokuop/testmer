@@ -35,37 +35,16 @@ from plugins.usettings import userSettings
 
 
 
-@Client.on_callback_query()
-async def start_handler(c: Client, cb: CallbackQuery):
-    Fsub = await ForceSub(c, m)
-    if Fsub == 400:
-        return
-    user = UserSettings(m.from_user.id, m.from_user.first_name)
-    #     await cb_handler.cb_handler(c, cb)
-    # async def cb_handler(c: Client, cb: CallbackQuery):
-    if cb.data == "merge":
-        await cb.message.edit(
-            text=f"Hɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}** ",
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton("Close", callback_data="close_data" )
-                        
-                    ]
-                    
-                ]
-            ),
-        )
-        return
+
         
 @Client.on_callback_query()
 async def callback_handler(c: Client, cb: CallbackQuery):
     user = UserSettings(m.from_user.id, m.from_user.first_name)
     #     await cb_handler.cb_handler(c, cb)
     # async def cb_handler(c: Client, cb: CallbackQuery):
-    if cb.data == "start":
+    if cb.data == "merge":
         await cb.message.edit(
-            text="fHɪ **{m.from_user.first_name}**\n\n ⚡ I ᴀᴍ ᴀ ғɪʟᴇ/ᴠɪᴅᴇᴏ ᴍᴇʀɢᴇʀ ʙᴏᴛ\n\n😎 I ᴄᴀɴ ᴍᴇʀɢᴇ ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs!, ᴀɴᴅ ᴜᴘʟᴏᴀᴅ ɪᴛ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ\n\n/help ғᴏʀ ʜᴏᴡ ᴛᴏ ᴜsᴇ\n\n**Oᴡɴᴇʀ: 🈲 @{Config.OWNER_USERNAME}**",
+            text="Wʜᴇʀᴇ ᴅᴏ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜᴘʟᴏᴀᴅ?",
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
